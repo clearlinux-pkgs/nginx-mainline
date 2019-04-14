@@ -1,0 +1,246 @@
+From 21f68ede41d5959bedb94e66fdd378fb053c5ac0 Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Wed, 29 Mar 2017 22:40:11 +0000
+Subject: [PATCH] Rework nginx configuration directories
+
+Instead of having configuration values that can't be changed in the
+stateless configuraiton file, have the stateless configuration file only
+include a single file, /etc/nginx/nginx.conf, that will then be
+responsible for fully setting the rest of the configuration options.
+
+To assist users, add an example nginx.conf file that contains reasonable
+default values.
+
+We modify the default HTML pages (index.html) and install them as
+template webroot files using a one-time setup service. We make them
+generic so they can be used for all sorts of http servers that are
+in the same bundle.
+---
+ conf/nginx.conf          | 118 +----------------------------------------------
+ conf/nginx.conf.example  |  19 ++++++++
+ conf/server.conf.example |  65 ++++++++++++++++++++++++++
+ html/50x.html            |  41 +++++++++-------
+ html/index.html          |  45 +++++++++---------
+ 5 files changed, 133 insertions(+), 155 deletions(-)
+ create mode 100644 conf/nginx.conf.example
+ create mode 100644 conf/server.conf.example
+
+diff --git a/conf/nginx.conf b/conf/nginx.conf
+index 29bc085..d34e64f 100644
+--- a/conf/nginx.conf
++++ b/conf/nginx.conf
+@@ -1,117 +1 @@
+-
+-#user  nobody;
+-worker_processes  1;
+-
+-#error_log  logs/error.log;
+-#error_log  logs/error.log  notice;
+-#error_log  logs/error.log  info;
+-
+-#pid        logs/nginx.pid;
+-
+-
+-events {
+-    worker_connections  1024;
+-}
+-
+-
+-http {
+-    include       mime.types;
+-    default_type  application/octet-stream;
+-
+-    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+-    #                  '$status $body_bytes_sent "$http_referer" '
+-    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+-
+-    #access_log  logs/access.log  main;
+-
+-    sendfile        on;
+-    #tcp_nopush     on;
+-
+-    #keepalive_timeout  0;
+-    keepalive_timeout  65;
+-
+-    #gzip  on;
+-
+-    server {
+-        listen       80;
+-        server_name  localhost;
+-
+-        #charset koi8-r;
+-
+-        #access_log  logs/host.access.log  main;
+-
+-        location / {
+-            root   html;
+-            index  index.html index.htm;
+-        }
+-
+-        #error_page  404              /404.html;
+-
+-        # redirect server error pages to the static page /50x.html
+-        #
+-        error_page   500 502 503 504  /50x.html;
+-        location = /50x.html {
+-            root   html;
+-        }
+-
+-        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+-        #
+-        #location ~ \.php$ {
+-        #    proxy_pass   http://127.0.0.1;
+-        #}
+-
+-        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+-        #
+-        #location ~ \.php$ {
+-        #    root           html;
+-        #    fastcgi_pass   127.0.0.1:9000;
+-        #    fastcgi_index  index.php;
+-        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+-        #    include        fastcgi_params;
+-        #}
+-
+-        # deny access to .htaccess files, if Apache's document root
+-        # concurs with nginx's one
+-        #
+-        #location ~ /\.ht {
+-        #    deny  all;
+-        #}
+-    }
+-
+-
+-    # another virtual host using mix of IP-, name-, and port-based configuration
+-    #
+-    #server {
+-    #    listen       8000;
+-    #    listen       somename:8080;
+-    #    server_name  somename  alias  another.alias;
+-
+-    #    location / {
+-    #        root   html;
+-    #        index  index.html index.htm;
+-    #    }
+-    #}
+-
+-
+-    # HTTPS server
+-    #
+-    #server {
+-    #    listen       443 ssl;
+-    #    server_name  localhost;
+-
+-    #    ssl_certificate      cert.pem;
+-    #    ssl_certificate_key  cert.key;
+-
+-    #    ssl_session_cache    shared:SSL:1m;
+-    #    ssl_session_timeout  5m;
+-
+-    #    ssl_ciphers  HIGH:!aNULL:!MD5;
+-    #    ssl_prefer_server_ciphers  on;
+-
+-    #    location / {
+-    #        root   html;
+-    #        index  index.html index.htm;
+-    #    }
+-    #}
+-
+-}
++include /etc/nginx/nginx.conf;
+diff --git a/conf/nginx.conf.example b/conf/nginx.conf.example
+new file mode 100644
+index 0000000..3465632
+--- /dev/null
++++ b/conf/nginx.conf.example
+@@ -0,0 +1,19 @@
++worker_processes  4;
++
++events {
++    worker_connections  1024;
++}
++
++http {
++    include       mime.types;
++    default_type  application/octet-stream;
++
++    sendfile      on;
++    aio           on;
++    tcp_nopush    on;
++    directio      8m;
++
++    access_log    syslog:server=unix:/dev/log;
++
++    include /etc/nginx/conf.d/*.conf;
++}
+diff --git a/conf/server.conf.example b/conf/server.conf.example
+new file mode 100644
+index 0000000..bece759
+--- /dev/null
++++ b/conf/server.conf.example
+@@ -0,0 +1,65 @@
++server {
++    listen       80;
++
++    server_name  localhost;
++
++
++    # For an SSL enabled host, use these:
++
++    #listen       443 ssl;
++    #ssl_certificate      cert.pem;
++    #ssl_certificate_key  cert.key;
++
++    #ssl_session_cache    shared:SSL:1m;
++    #ssl_session_timeout  5m;
++
++    #ssl_ciphers  HIGH:!aNULL:!MD5;
++    #ssl_prefer_server_ciphers  on;
++
++
++    #charset koi8-r;
++
++    #access_log  logs/host.access.log  main;
++
++    location / {
++        root   html;
++        index  index.html index.htm;
++        #index  index.php index.html index.htm;
++    }
++
++    #error_page  404              /404.html;
++
++    # redirect server error pages to the static page /50x.html
++    #
++    error_page   500 502 503 504  /50x.html;
++    location = /50x.html {
++        root   html;
++    }
++
++    # proxy the PHP scripts to Apache listening on 127.0.0.1:80
++    #
++    #location ~ \.php$ {
++    #    proxy_pass   http://127.0.0.1;
++    #}
++
++    # pass the PHP scripts to FastCGI server listening on /run/php-fpm.sock
++    #
++    #location ~ \.php$ {
++    #    root           html;
++
++    #    # mitigate httpoxy.org type vulnerabilities
++    #    fastcgi_param  HTTP_PROXY "";
++
++    #    fastcgi_pass   unix:/run/php-fpm.sock;
++    #    fastcgi_index  index.php;
++    #    fastcgi_param  SCRIPT_FILENAME  /usr/share/nginx/html/$fastcgi_script_name;
++    #    include        /usr/share/nginx/conf/fastcgi_params;
++    #}
++
++    # deny access to .htaccess files, if Apache's document root
++    # concurs with nginx's one
++    #
++    location ~ /\.ht {
++        deny  all;
++    }
++}

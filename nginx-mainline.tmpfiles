@@ -1,0 +1,7 @@
+d /var/log/nginx-mainline 750 httpd httpd -
+d /var/lib/nginx-mainline 700 httpd httpd -
+d /var/lib/nginx-mainline/uwsgi 700 httpd httpd -
+d /var/lib/nginx-mainline/client-body 700 httpd httpd -
+d /var/lib/nginx-mainline/proxy 700 httpd httpd -
+d /var/lib/nginx-mainline/fast-cgi 700 httpd httpd -
+d /var/lib/nginx-mainline/scgi 700 httpd httpd -

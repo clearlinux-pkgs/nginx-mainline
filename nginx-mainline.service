@@ -1,0 +1,21 @@
+[Unit]
+Description=A high performance web server and a reverse proxy server (mainline version)
+After=network-online.target
+Wants=network-online.target
+After=webroot-setup.service
+Requires=nginx-mainline-setup.service
+
+[Service]
+Type=forking
+PIDFile=/run/nginx.pid
+PrivateDevices=yes
+
+ExecStartPre=/usr/bin/nginx-mainline -t
+ExecStart=/usr/bin/nginx-mainline
+ExecReload=/usr/bin/nginx-mainline -s reload
+ExecStop=/usr/bin/nginx-mainline -s stop
+KillSignal=SIGQUIT
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target

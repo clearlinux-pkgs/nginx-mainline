@@ -1,0 +1,12 @@
+Index: nginx-1.9.5/auto/options
+===================================================================
+--- nginx-1.9.5.orig/auto/options
++++ nginx-1.9.5/auto/options
+@@ -337,7 +337,6 @@ use the \"--with-mail_ssl_module\" optio
+ 
+         *)
+             echo "$0: error: invalid option \"$option\""
+-            exit 1
+         ;;
+     esac
+ done
