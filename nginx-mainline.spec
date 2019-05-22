@@ -5,14 +5,14 @@
 # Source0 file verified with key 0x520A9993A1C052F8 (mdounin@mdounin.ru)
 #
 Name     : nginx-mainline
-Version  : 1.15.12
-Release  : 76
-URL      : https://nginx.org/download/nginx-1.15.12.tar.gz
-Source0  : https://nginx.org/download/nginx-1.15.12.tar.gz
+Version  : 1.17.0
+Release  : 77
+URL      : https://nginx.org/download/nginx-1.17.0.tar.gz
+Source0  : https://nginx.org/download/nginx-1.17.0.tar.gz
 Source1  : nginx-mainline-setup.service
 Source2  : nginx-mainline.service
 Source3  : nginx-mainline.tmpfiles
-Source99 : https://nginx.org/download/nginx-1.15.12.tar.gz.asc
+Source99 : https://nginx.org/download/nginx-1.17.0.tar.gz.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-2-Clause
@@ -88,7 +88,7 @@ services components for the nginx-mainline package.
 
 
 %prep
-%setup -q -n nginx-1.15.12
+%setup -q -n nginx-1.17.0
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -98,7 +98,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1555457535
+export SOURCE_DATE_EPOCH=1558552064
+export GCC_IGNORE_WERROR=1
 export LDFLAGS="${LDFLAGS} -fno-lto"
 %configure --disable-static --prefix=/var/www \
 --conf-path=/usr/share/nginx-mainline/conf/nginx.conf \
@@ -128,7 +129,7 @@ export LDFLAGS="${LDFLAGS} -fno-lto"
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1555457535
+export SOURCE_DATE_EPOCH=1558552064
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nginx-mainline
 cp LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/LICENSE
