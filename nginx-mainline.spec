@@ -6,7 +6,7 @@
 #
 Name     : nginx-mainline
 Version  : 1.17.0
-Release  : 77
+Release  : 78
 URL      : https://nginx.org/download/nginx-1.17.0.tar.gz
 Source0  : https://nginx.org/download/nginx-1.17.0.tar.gz
 Source1  : nginx-mainline-setup.service
@@ -98,9 +98,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1558552064
+export SOURCE_DATE_EPOCH=1558819103
 export GCC_IGNORE_WERROR=1
-export LDFLAGS="${LDFLAGS} -fno-lto"
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %configure --disable-static --prefix=/var/www \
 --conf-path=/usr/share/nginx-mainline/conf/nginx.conf \
 --sbin-path=/usr/bin/nginx-mainline \
@@ -129,7 +132,7 @@ export LDFLAGS="${LDFLAGS} -fno-lto"
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1558552064
+export SOURCE_DATE_EPOCH=1558819103
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nginx-mainline
 cp LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/LICENSE

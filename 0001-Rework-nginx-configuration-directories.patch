@@ -147,7 +147,7 @@ index 29bc085..d34e64f 100644
 -    #}
 -
 -}
-+include /etc/nginx/nginx.conf;
++include /etc/nginx-mainline/nginx.conf;
 diff --git a/conf/nginx.conf.example b/conf/nginx.conf.example
 new file mode 100644
 index 0000000..3465632
@@ -171,7 +171,7 @@ index 0000000..3465632
 +
 +    access_log    syslog:server=unix:/dev/log;
 +
-+    include /etc/nginx/conf.d/*.conf;
++    include /etc/nginx-mainline/conf.d/*.conf;
 +}
 diff --git a/conf/server.conf.example b/conf/server.conf.example
 new file mode 100644
