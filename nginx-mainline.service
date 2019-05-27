@@ -7,7 +7,7 @@ Requires=nginx-mainline-setup.service
 
 [Service]
 Type=forking
-PIDFile=/run/nginx.pid
+PIDFile=/run/nginx-mainline.pid
 PrivateDevices=yes
 
 ExecStartPre=/usr/bin/nginx-mainline -t
