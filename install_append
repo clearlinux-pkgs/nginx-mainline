@@ -5,7 +5,7 @@ install -m0644 conf/server.conf.example %{buildroot}/usr/share/nginx-mainline/co
 install -m0644 conf/nginx.conf.example %{buildroot}/usr/share/nginx-mainline/conf/
 # move these to a "template" location
 mkdir -p %{buildroot}/usr/share/nginx-mainline/html
-mv %{buildroot}/var/www/html/* %{buildroot}/usr/share/nginx-mainline/html/
+mv %{buildroot}/var/www/html/* %{buildroot}/usr/share/nginx-mainline/html/ || :
 
 mkdir -p %{buildroot}/usr/share/clr-service-restart
 ln -sf /usr/lib/systemd/system/nginx-mainline.service %{buildroot}/usr/share/clr-service-restart/nginx-mainline.service

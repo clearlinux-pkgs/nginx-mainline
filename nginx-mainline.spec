@@ -5,15 +5,15 @@
 # Source0 file verified with key 0x520A9993A1C052F8 (mdounin@mdounin.ru)
 #
 Name     : nginx-mainline
-Version  : 1.17.0
-Release  : 79
-URL      : https://nginx.org/download/nginx-1.17.0.tar.gz
-Source0  : https://nginx.org/download/nginx-1.17.0.tar.gz
+Version  : 1.17.3
+Release  : 80
+URL      : https://nginx.org/download/nginx-1.17.3.tar.gz
+Source0  : https://nginx.org/download/nginx-1.17.3.tar.gz
 Source1  : nginx-mainline-setup.service
 Source2  : nginx-mainline.service
 Source3  : nginx-mainline.tmpfiles
-Source99 : https://nginx.org/download/nginx-1.17.0.tar.gz.asc
-Summary  : No detailed summary available
+Source4 : https://nginx.org/download/nginx-1.17.3.tar.gz.asc
+Summary  : Lightweight HTTP server and IMAP/POP3 proxy server, mainline release
 Group    : Development/Tools
 License  : BSD-2-Clause
 Requires: nginx-mainline-bin = %{version}-%{release}
@@ -88,7 +88,7 @@ services components for the nginx-mainline package.
 
 
 %prep
-%setup -q -n nginx-1.17.0
+%setup -q -n nginx-1.17.3
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -97,8 +97,9 @@ services components for the nginx-mainline package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1558918791
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1565746124
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -132,7 +133,7 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1558918791
+export SOURCE_DATE_EPOCH=1565746124
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nginx-mainline
 cp LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/LICENSE
@@ -142,12 +143,15 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/systemd/system/nginx-mainline-se
 install -m 0644 %{SOURCE2} %{buildroot}/usr/lib/systemd/system/nginx-mainline.service
 mkdir -p %{buildroot}/usr/lib/tmpfiles.d
 install -m 0644 %{SOURCE3} %{buildroot}/usr/lib/tmpfiles.d/nginx-mainline.conf
+## Remove excluded files
+rm -f %{buildroot}/var/www/html/50x.html
+rm -f %{buildroot}/var/www/html/index.html
 ## install_append content
 rm -f %{buildroot}/usr/share/nginx-mainline/conf/*.default
 install -m0644 conf/server.conf.example %{buildroot}/usr/share/nginx-mainline/conf/
 install -m0644 conf/nginx.conf.example %{buildroot}/usr/share/nginx-mainline/conf/
 mkdir -p %{buildroot}/usr/share/nginx-mainline/html
-mv %{buildroot}/var/www/html/* %{buildroot}/usr/share/nginx-mainline/html/
+mv %{buildroot}/var/www/html/* %{buildroot}/usr/share/nginx-mainline/html/ || :
 mkdir -p %{buildroot}/usr/share/clr-service-restart
 ln -sf /usr/lib/systemd/system/nginx-mainline.service %{buildroot}/usr/share/clr-service-restart/nginx-mainline.service
 ## install_append end
@@ -177,8 +181,6 @@ ln -sf /usr/lib/systemd/system/nginx-mainline.service %{buildroot}/usr/share/clr
 /usr/share/nginx-mainline/conf/server.conf.example
 /usr/share/nginx-mainline/conf/uwsgi_params
 /usr/share/nginx-mainline/conf/win-utf
-/usr/share/nginx-mainline/html/50x.html
-/usr/share/nginx-mainline/html/index.html
 
 %files lib
 %defattr(-,root,root,-)
