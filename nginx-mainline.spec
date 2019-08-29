@@ -6,14 +6,14 @@
 #
 Name     : nginx-mainline
 Version  : 1.17.3
-Release  : 81
+Release  : 82
 URL      : https://nginx.org/download/nginx-1.17.3.tar.gz
 Source0  : https://nginx.org/download/nginx-1.17.3.tar.gz
 Source1  : nginx-mainline-setup.service
 Source2  : nginx-mainline.service
 Source3  : nginx-mainline.tmpfiles
 Source4 : https://nginx.org/download/nginx-1.17.3.tar.gz.asc
-Summary  : Lightweight HTTP server and IMAP/POP3 proxy server, mainline release
+Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-2-Clause
 Requires: nginx-mainline-bin = %{version}-%{release}
@@ -98,8 +98,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1565746240
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1567108029
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -129,11 +128,12 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 --with-poll_module \
 --with-select_module \
 --with-stream=dynamic \
---with-stream_ssl_module
+--with-stream_ssl_module \
+--with-http_realip_module
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1565746240
+export SOURCE_DATE_EPOCH=1567108029
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nginx-mainline
 cp LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/LICENSE
