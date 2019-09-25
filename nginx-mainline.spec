@@ -6,7 +6,7 @@
 #
 Name     : nginx-mainline
 Version  : 1.17.3
-Release  : 89
+Release  : 90
 URL      : https://nginx.org/download/nginx-1.17.3.tar.gz
 Source0  : https://nginx.org/download/nginx-1.17.3.tar.gz
 Source1  : nginx-mainline-setup.service
@@ -121,7 +121,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1569443987
+export SOURCE_DATE_EPOCH=1569445171
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -156,7 +156,7 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1569443987
+export SOURCE_DATE_EPOCH=1569445171
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nginx-mainline
 cp LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/LICENSE
@@ -310,6 +310,71 @@ install -m0755 nginx-module %{buildroot}/usr/bin
 %files extras-modulebuild
 %defattr(-,root,root,-)
 /usr/bin/nginx-module
+/usr/share/nginx-mainline/module-build/auto/cc/acc
+/usr/share/nginx-mainline/module-build/auto/cc/bcc
+/usr/share/nginx-mainline/module-build/auto/cc/ccc
+/usr/share/nginx-mainline/module-build/auto/cc/clang
+/usr/share/nginx-mainline/module-build/auto/cc/conf
+/usr/share/nginx-mainline/module-build/auto/cc/gcc
+/usr/share/nginx-mainline/module-build/auto/cc/icc
+/usr/share/nginx-mainline/module-build/auto/cc/msvc
+/usr/share/nginx-mainline/module-build/auto/cc/name
+/usr/share/nginx-mainline/module-build/auto/cc/owc
+/usr/share/nginx-mainline/module-build/auto/cc/sunc
+/usr/share/nginx-mainline/module-build/auto/define
+/usr/share/nginx-mainline/module-build/auto/endianness
+/usr/share/nginx-mainline/module-build/auto/feature
+/usr/share/nginx-mainline/module-build/auto/have
+/usr/share/nginx-mainline/module-build/auto/have_headers
+/usr/share/nginx-mainline/module-build/auto/headers
+/usr/share/nginx-mainline/module-build/auto/include
+/usr/share/nginx-mainline/module-build/auto/init
+/usr/share/nginx-mainline/module-build/auto/install
+/usr/share/nginx-mainline/module-build/auto/lib/conf
+/usr/share/nginx-mainline/module-build/auto/lib/geoip/conf
+/usr/share/nginx-mainline/module-build/auto/lib/google-perftools/conf
+/usr/share/nginx-mainline/module-build/auto/lib/libatomic/conf
+/usr/share/nginx-mainline/module-build/auto/lib/libatomic/make
+/usr/share/nginx-mainline/module-build/auto/lib/libgd/conf
+/usr/share/nginx-mainline/module-build/auto/lib/libxslt/conf
+/usr/share/nginx-mainline/module-build/auto/lib/make
+/usr/share/nginx-mainline/module-build/auto/lib/openssl/conf
+/usr/share/nginx-mainline/module-build/auto/lib/openssl/make
+/usr/share/nginx-mainline/module-build/auto/lib/openssl/makefile.bcc
+/usr/share/nginx-mainline/module-build/auto/lib/openssl/makefile.msvc
+/usr/share/nginx-mainline/module-build/auto/lib/pcre/conf
+/usr/share/nginx-mainline/module-build/auto/lib/pcre/make
+/usr/share/nginx-mainline/module-build/auto/lib/pcre/makefile.bcc
+/usr/share/nginx-mainline/module-build/auto/lib/pcre/makefile.msvc
+/usr/share/nginx-mainline/module-build/auto/lib/pcre/makefile.owc
+/usr/share/nginx-mainline/module-build/auto/lib/perl/conf
+/usr/share/nginx-mainline/module-build/auto/lib/perl/make
+/usr/share/nginx-mainline/module-build/auto/lib/zlib/conf
+/usr/share/nginx-mainline/module-build/auto/lib/zlib/make
+/usr/share/nginx-mainline/module-build/auto/lib/zlib/makefile.bcc
+/usr/share/nginx-mainline/module-build/auto/lib/zlib/makefile.msvc
+/usr/share/nginx-mainline/module-build/auto/lib/zlib/makefile.owc
+/usr/share/nginx-mainline/module-build/auto/make
+/usr/share/nginx-mainline/module-build/auto/module
+/usr/share/nginx-mainline/module-build/auto/modules
+/usr/share/nginx-mainline/module-build/auto/nohave
+/usr/share/nginx-mainline/module-build/auto/options
+/usr/share/nginx-mainline/module-build/auto/options.orig
+/usr/share/nginx-mainline/module-build/auto/os/conf
+/usr/share/nginx-mainline/module-build/auto/os/darwin
+/usr/share/nginx-mainline/module-build/auto/os/freebsd
+/usr/share/nginx-mainline/module-build/auto/os/linux
+/usr/share/nginx-mainline/module-build/auto/os/solaris
+/usr/share/nginx-mainline/module-build/auto/os/win32
+/usr/share/nginx-mainline/module-build/auto/sources
+/usr/share/nginx-mainline/module-build/auto/stubs
+/usr/share/nginx-mainline/module-build/auto/summary
+/usr/share/nginx-mainline/module-build/auto/threads
+/usr/share/nginx-mainline/module-build/auto/types/sizeof
+/usr/share/nginx-mainline/module-build/auto/types/typedef
+/usr/share/nginx-mainline/module-build/auto/types/uintptr_t
+/usr/share/nginx-mainline/module-build/auto/types/value
+/usr/share/nginx-mainline/module-build/auto/unix
 /usr/share/nginx-mainline/module-build/configure
 
 %files lib

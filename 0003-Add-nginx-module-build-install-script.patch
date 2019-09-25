@@ -1,19 +1,19 @@
-From 33807f705d97f1d425da890e05ae006c32eab49d Mon Sep 17 00:00:00 2001
+From 138e2167b51099d48770286148853c58f09b9ada Mon Sep 17 00:00:00 2001
 From: Auke Kok <auke-jan.h.kok@intel.com>
 Date: Wed, 25 Sep 2019 11:51:19 -0700
 Subject: [PATCH] Add nginx-module build/install script.
 
 ---
- nginx-module | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ nginx-module | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
  create mode 100755 nginx-module
 
 diff --git a/nginx-module b/nginx-module
 new file mode 100755
-index 0000000..f56679d
+index 0000000..e796696
 --- /dev/null
 +++ b/nginx-module
-@@ -0,0 +1,25 @@
+@@ -0,0 +1,26 @@
 +#!/bin/bash
 +
 +# helper script to compile modules for nginx as out-of-tree.
@@ -33,6 +33,7 @@ index 0000000..f56679d
 +elif [ "$1" == "asset-install" ]; then
 +	mkdir -p $2/usr/share/nginx-mainline/module-build
 +	install configure $2/usr/share/nginx-mainline/module-build/
++	cp -ar auto $2/usr/share/nginx-mainline/module-build/
 +	mkdir -p $2/usr/include/nginx-mainline
 +	for h in `cd src; find * -name '*.h'`; do
 +		mkdir -pv $2/usr/include/nginx-mainline/`dirname $h`
