@@ -1,0 +1,44 @@
+From 33807f705d97f1d425da890e05ae006c32eab49d Mon Sep 17 00:00:00 2001
+From: Auke Kok <auke-jan.h.kok@intel.com>
+Date: Wed, 25 Sep 2019 11:51:19 -0700
+Subject: [PATCH] Add nginx-module build/install script.
+
+---
+ nginx-module | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+ create mode 100755 nginx-module
+
+diff --git a/nginx-module b/nginx-module
+new file mode 100755
+index 0000000..f56679d
+--- /dev/null
++++ b/nginx-module
+@@ -0,0 +1,25 @@
++#!/bin/bash
++
++# helper script to compile modules for nginx as out-of-tree.
++
++if [ "$1" == "configure" ]; then
++	cp -ar /usr/share/nginx-mainline/module-build/configure \
++		/usr/share/nginx-mainline/module-build/auto .
++	ln -sf /usr/include/nginx-mainline src
++	./configure --add-dynamic-module=./
++elif [ "$1" == "build" ]; then
++	make -f objs/Makefile modules
++elif [ "$1" == "install" ]; then
++	mkdir -p $2/usr/lib64/nginx-mainline
++	for m in objs/*.so ; do
++		install -v -m0755 $m $2/usr/lib64/nginx-mainline/
++	done
++elif [ "$1" == "asset-install" ]; then
++	mkdir -p $2/usr/share/nginx-mainline/module-build
++	install configure $2/usr/share/nginx-mainline/module-build/
++	mkdir -p $2/usr/include/nginx-mainline
++	for h in `cd src; find * -name '*.h'`; do
++		mkdir -pv $2/usr/include/nginx-mainline/`dirname $h`
++		cp -v src/$h $2/usr/include/nginx-mainline/`dirname $h`/
++	done
++fi
+-- 
+2.23.0
+

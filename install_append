@@ -9,3 +9,7 @@ mv %{buildroot}/var/www/html/* %{buildroot}/usr/share/nginx-mainline/html/ || :
 
 mkdir -p %{buildroot}/usr/share/clr-service-restart
 ln -sf /usr/lib/systemd/system/nginx-mainline.service %{buildroot}/usr/share/clr-service-restart/nginx-mainline.service
+
+# nginx module build infra
+install -m0755 nginx-module %{buildroot}/usr/bin
+%{buildroot}/usr/bin/nginx-module asset-install %{buildroot}

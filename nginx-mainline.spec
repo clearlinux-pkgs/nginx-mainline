@@ -6,7 +6,7 @@
 #
 Name     : nginx-mainline
 Version  : 1.17.3
-Release  : 82
+Release  : 89
 URL      : https://nginx.org/download/nginx-1.17.3.tar.gz
 Source0  : https://nginx.org/download/nginx-1.17.3.tar.gz
 Source1  : nginx-mainline-setup.service
@@ -29,6 +29,7 @@ BuildRequires : zlib-dev
 Patch1: build.patch
 Patch2: 0001-Rework-nginx-configuration-directories.patch
 Patch3: 0002-Enable-HTTP-2-by-default.patch
+Patch4: 0003-Add-nginx-module-build-install-script.patch
 
 %description
 Documentation is available at http://nginx.org
@@ -59,6 +60,27 @@ Group: Data
 
 %description data
 data components for the nginx-mainline package.
+
+
+%package dev
+Summary: dev components for the nginx-mainline package.
+Group: Development
+Requires: nginx-mainline-lib = %{version}-%{release}
+Requires: nginx-mainline-bin = %{version}-%{release}
+Requires: nginx-mainline-data = %{version}-%{release}
+Provides: nginx-mainline-devel = %{version}-%{release}
+Requires: nginx-mainline = %{version}-%{release}
+
+%description dev
+dev components for the nginx-mainline package.
+
+
+%package extras-modulebuild
+Summary: extras-modulebuild components for the nginx-mainline package.
+Group: Default
+
+%description extras-modulebuild
+extras-modulebuild components for the nginx-mainline package.
 
 
 %package lib
@@ -92,13 +114,14 @@ services components for the nginx-mainline package.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1567108029
+export SOURCE_DATE_EPOCH=1569443987
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -133,7 +156,7 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1567108029
+export SOURCE_DATE_EPOCH=1569443987
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nginx-mainline
 cp LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/LICENSE
@@ -151,6 +174,8 @@ mkdir -p %{buildroot}/usr/share/nginx-mainline/html
 mv %{buildroot}/var/www/html/* %{buildroot}/usr/share/nginx-mainline/html/ || :
 mkdir -p %{buildroot}/usr/share/clr-service-restart
 ln -sf /usr/lib/systemd/system/nginx-mainline.service %{buildroot}/usr/share/clr-service-restart/nginx-mainline.service
+install -m0755 nginx-module %{buildroot}/usr/bin
+%{buildroot}/usr/bin/nginx-module asset-install %{buildroot}
 ## install_append end
 
 %files
@@ -180,6 +205,112 @@ ln -sf /usr/lib/systemd/system/nginx-mainline.service %{buildroot}/usr/share/clr
 /usr/share/nginx-mainline/conf/win-utf
 /usr/share/nginx-mainline/html/50x.html
 /usr/share/nginx-mainline/html/index.html
+
+%files dev
+%defattr(-,root,root,-)
+/usr/include/nginx-mainline/core/nginx.h
+/usr/include/nginx-mainline/core/ngx_array.h
+/usr/include/nginx-mainline/core/ngx_buf.h
+/usr/include/nginx-mainline/core/ngx_conf_file.h
+/usr/include/nginx-mainline/core/ngx_config.h
+/usr/include/nginx-mainline/core/ngx_connection.h
+/usr/include/nginx-mainline/core/ngx_core.h
+/usr/include/nginx-mainline/core/ngx_crc.h
+/usr/include/nginx-mainline/core/ngx_crc32.h
+/usr/include/nginx-mainline/core/ngx_crypt.h
+/usr/include/nginx-mainline/core/ngx_cycle.h
+/usr/include/nginx-mainline/core/ngx_file.h
+/usr/include/nginx-mainline/core/ngx_hash.h
+/usr/include/nginx-mainline/core/ngx_inet.h
+/usr/include/nginx-mainline/core/ngx_list.h
+/usr/include/nginx-mainline/core/ngx_log.h
+/usr/include/nginx-mainline/core/ngx_md5.h
+/usr/include/nginx-mainline/core/ngx_module.h
+/usr/include/nginx-mainline/core/ngx_murmurhash.h
+/usr/include/nginx-mainline/core/ngx_open_file_cache.h
+/usr/include/nginx-mainline/core/ngx_palloc.h
+/usr/include/nginx-mainline/core/ngx_parse.h
+/usr/include/nginx-mainline/core/ngx_parse_time.h
+/usr/include/nginx-mainline/core/ngx_proxy_protocol.h
+/usr/include/nginx-mainline/core/ngx_queue.h
+/usr/include/nginx-mainline/core/ngx_radix_tree.h
+/usr/include/nginx-mainline/core/ngx_rbtree.h
+/usr/include/nginx-mainline/core/ngx_regex.h
+/usr/include/nginx-mainline/core/ngx_resolver.h
+/usr/include/nginx-mainline/core/ngx_rwlock.h
+/usr/include/nginx-mainline/core/ngx_sha1.h
+/usr/include/nginx-mainline/core/ngx_shmtx.h
+/usr/include/nginx-mainline/core/ngx_slab.h
+/usr/include/nginx-mainline/core/ngx_string.h
+/usr/include/nginx-mainline/core/ngx_syslog.h
+/usr/include/nginx-mainline/core/ngx_thread_pool.h
+/usr/include/nginx-mainline/core/ngx_times.h
+/usr/include/nginx-mainline/event/ngx_event.h
+/usr/include/nginx-mainline/event/ngx_event_connect.h
+/usr/include/nginx-mainline/event/ngx_event_openssl.h
+/usr/include/nginx-mainline/event/ngx_event_pipe.h
+/usr/include/nginx-mainline/event/ngx_event_posted.h
+/usr/include/nginx-mainline/event/ngx_event_timer.h
+/usr/include/nginx-mainline/http/modules/ngx_http_ssi_filter_module.h
+/usr/include/nginx-mainline/http/modules/ngx_http_ssl_module.h
+/usr/include/nginx-mainline/http/modules/perl/ngx_http_perl_module.h
+/usr/include/nginx-mainline/http/ngx_http.h
+/usr/include/nginx-mainline/http/ngx_http_cache.h
+/usr/include/nginx-mainline/http/ngx_http_config.h
+/usr/include/nginx-mainline/http/ngx_http_core_module.h
+/usr/include/nginx-mainline/http/ngx_http_request.h
+/usr/include/nginx-mainline/http/ngx_http_script.h
+/usr/include/nginx-mainline/http/ngx_http_upstream.h
+/usr/include/nginx-mainline/http/ngx_http_upstream_round_robin.h
+/usr/include/nginx-mainline/http/ngx_http_variables.h
+/usr/include/nginx-mainline/http/v2/ngx_http_v2.h
+/usr/include/nginx-mainline/http/v2/ngx_http_v2_module.h
+/usr/include/nginx-mainline/mail/ngx_mail.h
+/usr/include/nginx-mainline/mail/ngx_mail_imap_module.h
+/usr/include/nginx-mainline/mail/ngx_mail_pop3_module.h
+/usr/include/nginx-mainline/mail/ngx_mail_smtp_module.h
+/usr/include/nginx-mainline/mail/ngx_mail_ssl_module.h
+/usr/include/nginx-mainline/os/unix/ngx_alloc.h
+/usr/include/nginx-mainline/os/unix/ngx_atomic.h
+/usr/include/nginx-mainline/os/unix/ngx_channel.h
+/usr/include/nginx-mainline/os/unix/ngx_darwin.h
+/usr/include/nginx-mainline/os/unix/ngx_darwin_config.h
+/usr/include/nginx-mainline/os/unix/ngx_dlopen.h
+/usr/include/nginx-mainline/os/unix/ngx_errno.h
+/usr/include/nginx-mainline/os/unix/ngx_files.h
+/usr/include/nginx-mainline/os/unix/ngx_freebsd.h
+/usr/include/nginx-mainline/os/unix/ngx_freebsd_config.h
+/usr/include/nginx-mainline/os/unix/ngx_gcc_atomic_amd64.h
+/usr/include/nginx-mainline/os/unix/ngx_gcc_atomic_ppc.h
+/usr/include/nginx-mainline/os/unix/ngx_gcc_atomic_sparc64.h
+/usr/include/nginx-mainline/os/unix/ngx_gcc_atomic_x86.h
+/usr/include/nginx-mainline/os/unix/ngx_linux.h
+/usr/include/nginx-mainline/os/unix/ngx_linux_config.h
+/usr/include/nginx-mainline/os/unix/ngx_os.h
+/usr/include/nginx-mainline/os/unix/ngx_posix_config.h
+/usr/include/nginx-mainline/os/unix/ngx_process.h
+/usr/include/nginx-mainline/os/unix/ngx_process_cycle.h
+/usr/include/nginx-mainline/os/unix/ngx_setaffinity.h
+/usr/include/nginx-mainline/os/unix/ngx_setproctitle.h
+/usr/include/nginx-mainline/os/unix/ngx_shmem.h
+/usr/include/nginx-mainline/os/unix/ngx_socket.h
+/usr/include/nginx-mainline/os/unix/ngx_solaris.h
+/usr/include/nginx-mainline/os/unix/ngx_solaris_config.h
+/usr/include/nginx-mainline/os/unix/ngx_sunpro_atomic_sparc64.h
+/usr/include/nginx-mainline/os/unix/ngx_thread.h
+/usr/include/nginx-mainline/os/unix/ngx_time.h
+/usr/include/nginx-mainline/os/unix/ngx_user.h
+/usr/include/nginx-mainline/stream/ngx_stream.h
+/usr/include/nginx-mainline/stream/ngx_stream_script.h
+/usr/include/nginx-mainline/stream/ngx_stream_ssl_module.h
+/usr/include/nginx-mainline/stream/ngx_stream_upstream.h
+/usr/include/nginx-mainline/stream/ngx_stream_upstream_round_robin.h
+/usr/include/nginx-mainline/stream/ngx_stream_variables.h
+
+%files extras-modulebuild
+%defattr(-,root,root,-)
+/usr/bin/nginx-module
+/usr/share/nginx-mainline/module-build/configure
 
 %files lib
 %defattr(-,root,root,-)
