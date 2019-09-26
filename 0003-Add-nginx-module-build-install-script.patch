@@ -1,19 +1,19 @@
-From 138e2167b51099d48770286148853c58f09b9ada Mon Sep 17 00:00:00 2001
+From eaa4b403499d43bd09b84ff02c0bcfbb3fb1931b Mon Sep 17 00:00:00 2001
 From: Auke Kok <auke-jan.h.kok@intel.com>
 Date: Wed, 25 Sep 2019 11:51:19 -0700
 Subject: [PATCH] Add nginx-module build/install script.
 
 ---
- nginx-module | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ nginx-module | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
  create mode 100755 nginx-module
 
 diff --git a/nginx-module b/nginx-module
 new file mode 100755
-index 0000000..e796696
+index 0000000..b2594e9
 --- /dev/null
 +++ b/nginx-module
-@@ -0,0 +1,26 @@
+@@ -0,0 +1,29 @@
 +#!/bin/bash
 +
 +# helper script to compile modules for nginx as out-of-tree.
@@ -21,7 +21,10 @@ index 0000000..e796696
 +if [ "$1" == "configure" ]; then
 +	cp -ar /usr/share/nginx-mainline/module-build/configure \
 +		/usr/share/nginx-mainline/module-build/auto .
-+	ln -sf /usr/include/nginx-mainline src
++	mkdir -p src
++	for d in /usr/include/nginx-mainline/*; do
++		ln -sf $d src/
++	done
 +	./configure --add-dynamic-module=./
 +elif [ "$1" == "build" ]; then
 +	make -f objs/Makefile modules
