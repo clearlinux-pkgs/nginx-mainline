@@ -6,7 +6,7 @@
 #
 Name     : nginx-mainline
 Version  : 1.17.3
-Release  : 91
+Release  : 96
 URL      : https://nginx.org/download/nginx-1.17.3.tar.gz
 Source0  : https://nginx.org/download/nginx-1.17.3.tar.gz
 Source1  : nginx-mainline-setup.service
@@ -121,7 +121,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1569532984
+export SOURCE_DATE_EPOCH=1570814479
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -142,7 +142,6 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 --user=httpd \
 --group=httpd \
 --with-threads \
---with-ipv6 \
 --with-debug \
 --error-log-path=stderr \
 --with-file-aio \
@@ -152,11 +151,12 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 --with-select_module \
 --with-stream=dynamic \
 --with-stream_ssl_module \
---with-http_realip_module
+--with-http_realip_module \
+--with-compat
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1569532984
+export SOURCE_DATE_EPOCH=1570814479
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nginx-mainline
 cp LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/LICENSE
@@ -208,6 +208,7 @@ install -m0755 nginx-module %{buildroot}/usr/bin
 
 %files dev
 %defattr(-,root,root,-)
+/usr/include/nginx-mainline/configure
 /usr/include/nginx-mainline/core/nginx.h
 /usr/include/nginx-mainline/core/ngx_array.h
 /usr/include/nginx-mainline/core/ngx_buf.h
