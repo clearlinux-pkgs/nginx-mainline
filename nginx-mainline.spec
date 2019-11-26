@@ -5,15 +5,15 @@
 # Source0 file verified with key 0x520A9993A1C052F8 (mdounin@mdounin.ru)
 #
 Name     : nginx-mainline
-Version  : 1.17.5
-Release  : 98
-URL      : https://nginx.org/download/nginx-1.17.5.tar.gz
-Source0  : https://nginx.org/download/nginx-1.17.5.tar.gz
+Version  : 1.17.6
+Release  : 99
+URL      : https://nginx.org/download/nginx-1.17.6.tar.gz
+Source0  : https://nginx.org/download/nginx-1.17.6.tar.gz
 Source1  : nginx-mainline-setup.service
 Source2  : nginx-mainline.service
 Source3  : nginx-mainline.tmpfiles
-Source4 : https://nginx.org/download/nginx-1.17.5.tar.gz.asc
-Summary  : Lightweight HTTP server and IMAP/POP3 proxy server, mainline release
+Source4 : https://nginx.org/download/nginx-1.17.6.tar.gz.asc
+Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-2-Clause
 Requires: nginx-mainline-bin = %{version}-%{release}
@@ -25,7 +25,6 @@ Requires: nginx-mainline-services = %{version}-%{release}
 BuildRequires : buildreq-cpan
 BuildRequires : openssl-dev
 BuildRequires : pcre-dev
-BuildRequires : util-linux
 BuildRequires : zlib-dev
 Patch1: build.patch
 Patch2: 0001-Rework-nginx-configuration-directories.patch
@@ -71,7 +70,6 @@ Requires: nginx-mainline-bin = %{version}-%{release}
 Requires: nginx-mainline-data = %{version}-%{release}
 Provides: nginx-mainline-devel = %{version}-%{release}
 Requires: nginx-mainline = %{version}-%{release}
-Requires: nginx-mainline = %{version}-%{release}
 
 %description dev
 dev components for the nginx-mainline package.
@@ -112,7 +110,8 @@ services components for the nginx-mainline package.
 
 
 %prep
-%setup -q -n nginx-1.17.5
+%setup -q -n nginx-1.17.6
+cd %{_builddir}/nginx-1.17.6
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -123,8 +122,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1571846670
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1574807544
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -159,10 +157,10 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1571846670
+export SOURCE_DATE_EPOCH=1574807544
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nginx-mainline
-cp %{_builddir}/nginx-1.17.5/LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/6e98d8b31beea6d51da2f8931062669945bd8aa4
+cp %{_builddir}/nginx-1.17.6/LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/6e98d8b31beea6d51da2f8931062669945bd8aa4
 %make_install
 mkdir -p %{buildroot}/usr/lib/systemd/system
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/systemd/system/nginx-mainline-setup.service
@@ -363,7 +361,6 @@ install -m0755 nginx-module %{buildroot}/usr/bin
 /usr/share/nginx-mainline/module-build/auto/modules
 /usr/share/nginx-mainline/module-build/auto/nohave
 /usr/share/nginx-mainline/module-build/auto/options
-/usr/share/nginx-mainline/module-build/auto/options.orig
 /usr/share/nginx-mainline/module-build/auto/os/conf
 /usr/share/nginx-mainline/module-build/auto/os/darwin
 /usr/share/nginx-mainline/module-build/auto/os/freebsd
