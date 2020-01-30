@@ -1,0 +1,2 @@
+Whenever updating to a new release, make sure to bump all nginx modules from
+the nginx-mainline-extras bundle.
