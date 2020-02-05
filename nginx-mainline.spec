@@ -6,7 +6,7 @@
 #
 Name     : nginx-mainline
 Version  : 1.17.8
-Release  : 101
+Release  : 103
 URL      : https://nginx.org/download/nginx-1.17.8.tar.gz
 Source0  : https://nginx.org/download/nginx-1.17.8.tar.gz
 Source1  : nginx-mainline-setup.service
@@ -122,7 +122,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1580234493
+export SOURCE_DATE_EPOCH=1580925774
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -135,6 +135,7 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 --lock-path=/run/lock/nginx-mainline.lock \
 --modules-path=/usr/lib64/nginx-mainline \
 --http-log-path=syslog:server=unix:/dev/log \
+--error-log-path=stderr \
 --http-client-body-temp-path=/var/lib/nginx-mainline/client-body \
 --http-fastcgi-temp-path=/var/lib/nginx-mainline/fastcgi \
 --http-proxy-temp-path=/var/lib/nginx-mainline/proxy \
@@ -144,20 +145,36 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 --group=httpd \
 --with-threads \
 --with-debug \
---error-log-path=stderr \
+--with-compat \
 --with-file-aio \
+--with-http_addition_module \
+--with-http_auth_request_module \
+--with-http_dav_module \
+--with-http_degradation_module \
+--with-http_flv_module \
+--with-http_gunzip_module \
+--with-http_gzip_static_module \
+--with-http_mp4_module \
+--with-http_random_index_module \
+--with-http_realip_module \
+--with-http_secure_link_module \
+--with-http_slice_module \
 --with-http_ssl_module \
+--with-http_stub_status_module \
+--with-http_sub_module \
 --with-http_v2_module \
+--with-mail \
+--with-mail_ssl_module \
 --with-poll_module \
 --with-select_module \
 --with-stream=dynamic \
+--with-stream_realip_module \
 --with-stream_ssl_module \
---with-http_realip_module \
---with-compat
+--with-stream_ssl_preread_module
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1580234493
+export SOURCE_DATE_EPOCH=1580925774
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nginx-mainline
 cp %{_builddir}/nginx-1.17.8/LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/6e98d8b31beea6d51da2f8931062669945bd8aa4
