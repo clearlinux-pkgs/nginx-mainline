@@ -1,0 +1,106 @@
+From fc1132e7c72e8fc07ac75dcd735e35f78a3ec78f Mon Sep 17 00:00:00 2001
+From: Auke Kok <auke-jan.h.kok@intel.com>
+Date: Wed, 12 Feb 2020 11:44:59 -0800
+Subject: [PATCH 5/5] Disable TLSv1 and TLSv1.1 by default.
+
+TLSv1.2 is still enabled. TLSv1.3 is enabled by default globally.
+
+This brings nginx-mainline in line with best practices (A rating on
+SSL Labs). Users can still enable the old protocols since they are
+available.
+---
+ src/http/modules/ngx_http_proxy_module.c | 3 +--
+ src/http/modules/ngx_http_ssl_module.c   | 3 +--
+ src/http/modules/ngx_http_uwsgi_module.c | 3 +--
+ src/mail/ngx_mail_ssl_module.c           | 3 +--
+ src/stream/ngx_stream_proxy_module.c     | 3 +--
+ src/stream/ngx_stream_ssl_module.c       | 3 +--
+ 6 files changed, 6 insertions(+), 12 deletions(-)
+
+diff --git a/src/http/modules/ngx_http_proxy_module.c b/src/http/modules/ngx_http_proxy_module.c
+index 3aafb99..479959f 100644
+--- a/src/http/modules/ngx_http_proxy_module.c
++++ b/src/http/modules/ngx_http_proxy_module.c
+@@ -3202,8 +3202,7 @@ ngx_http_proxy_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child)
+                               prev->upstream.ssl_session_reuse, 1);
+ 
+     ngx_conf_merge_bitmask_value(conf->ssl_protocols, prev->ssl_protocols,
+-                                 (NGX_CONF_BITMASK_SET|NGX_SSL_TLSv1
+-                                  |NGX_SSL_TLSv1_1|NGX_SSL_TLSv1_2));
++                                 (NGX_CONF_BITMASK_SET|NGX_SSL_TLSv1_2|NGX_SSL_TLSv1_3));
+ 
+     ngx_conf_merge_str_value(conf->ssl_ciphers, prev->ssl_ciphers,
+                              "DEFAULT");
+diff --git a/src/http/modules/ngx_http_ssl_module.c b/src/http/modules/ngx_http_ssl_module.c
+index 495e628..38eb42a 100644
+--- a/src/http/modules/ngx_http_ssl_module.c
++++ b/src/http/modules/ngx_http_ssl_module.c
+@@ -613,8 +613,7 @@ ngx_http_ssl_merge_srv_conf(ngx_conf_t *cf, void *parent, void *child)
+     ngx_conf_merge_value(conf->early_data, prev->early_data, 0);
+ 
+     ngx_conf_merge_bitmask_value(conf->protocols, prev->protocols,
+-                         (NGX_CONF_BITMASK_SET|NGX_SSL_TLSv1
+-                          |NGX_SSL_TLSv1_1|NGX_SSL_TLSv1_2));
++                         (NGX_CONF_BITMASK_SET|NGX_SSL_TLSv1_2|NGX_SSL_TLSv1_3));
+ 
+     ngx_conf_merge_size_value(conf->buffer_size, prev->buffer_size,
+                          NGX_SSL_BUFSIZE);
+diff --git a/src/http/modules/ngx_http_uwsgi_module.c b/src/http/modules/ngx_http_uwsgi_module.c
+index 56dc236..89429a4 100644
+--- a/src/http/modules/ngx_http_uwsgi_module.c
++++ b/src/http/modules/ngx_http_uwsgi_module.c
+@@ -1767,8 +1767,7 @@ ngx_http_uwsgi_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child)
+                               prev->upstream.ssl_session_reuse, 1);
+ 
+     ngx_conf_merge_bitmask_value(conf->ssl_protocols, prev->ssl_protocols,
+-                                 (NGX_CONF_BITMASK_SET|NGX_SSL_TLSv1
+-                                  |NGX_SSL_TLSv1_1|NGX_SSL_TLSv1_2));
++                                 (NGX_CONF_BITMASK_SET|NGX_SSL_TLSv1_2|NGX_SSL_TLSv1_3));
+ 
+     ngx_conf_merge_str_value(conf->ssl_ciphers, prev->ssl_ciphers,
+                              "DEFAULT");
+diff --git a/src/mail/ngx_mail_ssl_module.c b/src/mail/ngx_mail_ssl_module.c
+index e193b29..1e00763 100644
+--- a/src/mail/ngx_mail_ssl_module.c
++++ b/src/mail/ngx_mail_ssl_module.c
+@@ -291,8 +291,7 @@ ngx_mail_ssl_merge_conf(ngx_conf_t *cf, void *parent, void *child)
+                          prev->prefer_server_ciphers, 0);
+ 
+     ngx_conf_merge_bitmask_value(conf->protocols, prev->protocols,
+-                         (NGX_CONF_BITMASK_SET|NGX_SSL_TLSv1
+-                          |NGX_SSL_TLSv1_1|NGX_SSL_TLSv1_2));
++                         (NGX_CONF_BITMASK_SET|NGX_SSL_TLSv1_2|NGX_SSL_TLSv1_3));
+ 
+     ngx_conf_merge_uint_value(conf->verify, prev->verify, 0);
+     ngx_conf_merge_uint_value(conf->verify_depth, prev->verify_depth, 1);
+diff --git a/src/stream/ngx_stream_proxy_module.c b/src/stream/ngx_stream_proxy_module.c
+index 7484a72..7388884 100644
+--- a/src/stream/ngx_stream_proxy_module.c
++++ b/src/stream/ngx_stream_proxy_module.c
+@@ -2042,8 +2042,7 @@ ngx_stream_proxy_merge_srv_conf(ngx_conf_t *cf, void *parent, void *child)
+                               prev->ssl_session_reuse, 1);
+ 
+     ngx_conf_merge_bitmask_value(conf->ssl_protocols, prev->ssl_protocols,
+-                              (NGX_CONF_BITMASK_SET|NGX_SSL_TLSv1
+-                               |NGX_SSL_TLSv1_1|NGX_SSL_TLSv1_2));
++                              (NGX_CONF_BITMASK_SET|NGX_SSL_TLSv1_2|NGX_SSL_TLSv1_3));
+ 
+     ngx_conf_merge_str_value(conf->ssl_ciphers, prev->ssl_ciphers, "DEFAULT");
+ 
+diff --git a/src/stream/ngx_stream_ssl_module.c b/src/stream/ngx_stream_ssl_module.c
+index 79f30a8..20e1130 100644
+--- a/src/stream/ngx_stream_ssl_module.c
++++ b/src/stream/ngx_stream_ssl_module.c
+@@ -625,8 +625,7 @@ ngx_stream_ssl_merge_conf(ngx_conf_t *cf, void *parent, void *child)
+                          prev->prefer_server_ciphers, 0);
+ 
+     ngx_conf_merge_bitmask_value(conf->protocols, prev->protocols,
+-                         (NGX_CONF_BITMASK_SET|NGX_SSL_TLSv1
+-                          |NGX_SSL_TLSv1_1|NGX_SSL_TLSv1_2));
++                         (NGX_CONF_BITMASK_SET|NGX_SSL_TLSv1_2));
+ 
+     ngx_conf_merge_uint_value(conf->verify, prev->verify, 0);
+     ngx_conf_merge_uint_value(conf->verify_depth, prev->verify_depth, 1);
+-- 
+2.25.0
+

@@ -1,7 +1,7 @@
-From e9f02749e04b7d3d1812adf1e7f18d20c6525d8a Mon Sep 17 00:00:00 2001
+From bb2364161aa940efdb3f9c9d5fcea9db71b597af Mon Sep 17 00:00:00 2001
 From: Auke Kok <auke-jan.h.kok@intel.com>
 Date: Fri, 29 Mar 2019 10:02:35 -0700
-Subject: [PATCH] Enable HTTP/2 by default.
+Subject: [PATCH 3/5] Enable HTTP/2 by default.
 
 Adds a `nohttp2` option to explicitly disable HTTP/2 support.
 
@@ -12,7 +12,7 @@ This is only done for SSL, not for non-SSL listening servers.
  2 files changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/vim/syntax/nginx.vim b/contrib/vim/syntax/nginx.vim
-index 075b19a..8cff3e0 100644
+index 1a3a7b7..48c7a84 100644
 --- a/contrib/vim/syntax/nginx.vim
 +++ b/contrib/vim/syntax/nginx.vim
 @@ -62,7 +62,7 @@ syn match ngxListenComment '#.*$'
@@ -25,10 +25,10 @@ index 075b19a..8cff3e0 100644
      \ ipv6only reuseport so_keepalive
      \ nextgroup=@ngxListenParams skipwhite skipempty
 diff --git a/src/http/ngx_http_core_module.c b/src/http/ngx_http_core_module.c
-index 6b318dd..3049d32 100644
+index a603e09..1eeac50 100644
 --- a/src/http/ngx_http_core_module.c
 +++ b/src/http/ngx_http_core_module.c
-@@ -3964,6 +3964,9 @@ ngx_http_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
+@@ -3979,6 +3979,9 @@ ngx_http_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
          if (ngx_strcmp(value[n].data, "ssl") == 0) {
  #if (NGX_HTTP_SSL)
              lsopt.ssl = 1;
@@ -38,7 +38,7 @@ index 6b318dd..3049d32 100644
              continue;
  #else
              ngx_conf_log_error(NGX_LOG_EMERG, cf, 0,
-@@ -3975,7 +3978,6 @@ ngx_http_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
+@@ -3990,7 +3993,6 @@ ngx_http_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
  
          if (ngx_strcmp(value[n].data, "http2") == 0) {
  #if (NGX_HTTP_V2)
@@ -46,7 +46,7 @@ index 6b318dd..3049d32 100644
              continue;
  #else
              ngx_conf_log_error(NGX_LOG_EMERG, cf, 0,
-@@ -3985,6 +3987,11 @@ ngx_http_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
+@@ -4000,6 +4002,11 @@ ngx_http_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
  #endif
          }
  
@@ -59,5 +59,5 @@ index 6b318dd..3049d32 100644
              ngx_conf_log_error(NGX_LOG_WARN, cf, 0,
                                 "invalid parameter \"spdy\": "
 -- 
-2.21.0
+2.25.0
 

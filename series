@@ -1,4 +1,5 @@
-build.patch
-0001-Rework-nginx-configuration-directories.patch
-0002-Enable-HTTP-2-by-default.patch
-0003-Add-nginx-module-build-install-script.patch
+0001-Build-do-not-exit-after-unknown-option.patch
+0002-Rework-nginx-configuration-directories.patch
+0003-Enable-HTTP-2-by-default.patch
+0004-Add-nginx-module-build-install-script.patch
+0005-Disable-TLSv1-and-TLSv1.1-by-default.patch

@@ -6,7 +6,7 @@
 #
 Name     : nginx-mainline
 Version  : 1.17.8
-Release  : 103
+Release  : 105
 URL      : https://nginx.org/download/nginx-1.17.8.tar.gz
 Source0  : https://nginx.org/download/nginx-1.17.8.tar.gz
 Source1  : nginx-mainline-setup.service
@@ -26,10 +26,11 @@ BuildRequires : buildreq-cpan
 BuildRequires : openssl-dev
 BuildRequires : pcre-dev
 BuildRequires : zlib-dev
-Patch1: build.patch
-Patch2: 0001-Rework-nginx-configuration-directories.patch
-Patch3: 0002-Enable-HTTP-2-by-default.patch
-Patch4: 0003-Add-nginx-module-build-install-script.patch
+Patch1: 0001-Build-do-not-exit-after-unknown-option.patch
+Patch2: 0002-Rework-nginx-configuration-directories.patch
+Patch3: 0003-Enable-HTTP-2-by-default.patch
+Patch4: 0004-Add-nginx-module-build-install-script.patch
+Patch5: 0005-Disable-TLSv1-and-TLSv1.1-by-default.patch
 
 %description
 Documentation is available at http://nginx.org
@@ -116,13 +117,14 @@ cd %{_builddir}/nginx-1.17.8
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1580925774
+export SOURCE_DATE_EPOCH=1581541371
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -174,7 +176,7 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1580925774
+export SOURCE_DATE_EPOCH=1581541371
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nginx-mainline
 cp %{_builddir}/nginx-1.17.8/LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/6e98d8b31beea6d51da2f8931062669945bd8aa4
