@@ -5,14 +5,14 @@
 # Source0 file verified with key 0x520A9993A1C052F8 (mdounin@mdounin.ru)
 #
 Name     : nginx-mainline
-Version  : 1.17.9
-Release  : 106
-URL      : https://nginx.org/download/nginx-1.17.9.tar.gz
-Source0  : https://nginx.org/download/nginx-1.17.9.tar.gz
+Version  : 1.19.2
+Release  : 107
+URL      : https://nginx.org/download/nginx-1.19.2.tar.gz
+Source0  : https://nginx.org/download/nginx-1.19.2.tar.gz
 Source1  : nginx-mainline-setup.service
 Source2  : nginx-mainline.service
 Source3  : nginx-mainline.tmpfiles
-Source4  : https://nginx.org/download/nginx-1.17.9.tar.gz.asc
+Source4  : https://nginx.org/download/nginx-1.19.2.tar.gz.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-2-Clause
@@ -111,8 +111,8 @@ services components for the nginx-mainline package.
 
 
 %prep
-%setup -q -n nginx-1.17.9
-cd %{_builddir}/nginx-1.17.9
+%setup -q -n nginx-1.19.2
+cd %{_builddir}/nginx-1.19.2
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -124,11 +124,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1583258556
+export SOURCE_DATE_EPOCH=1597172380
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$CFLAGS -fno-lto "
-export FFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
 %configure --disable-static --prefix=/var/www \
 --conf-path=/usr/share/nginx-mainline/conf/nginx.conf \
@@ -176,10 +176,10 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1583258556
+export SOURCE_DATE_EPOCH=1597172380
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nginx-mainline
-cp %{_builddir}/nginx-1.17.9/LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/6e98d8b31beea6d51da2f8931062669945bd8aa4
+cp %{_builddir}/nginx-1.19.2/LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/6e98d8b31beea6d51da2f8931062669945bd8aa4
 %make_install
 mkdir -p %{buildroot}/usr/lib/systemd/system
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/systemd/system/nginx-mainline-setup.service
