@@ -1,17 +1,17 @@
-From eba8e0b5c1bfdc876c5d50f53d6257eaed225835 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Auke Kok <auke-jan.h.kok@intel.com>
 Date: Wed, 12 Feb 2020 11:16:57 -0800
-Subject: [PATCH 1/5] Build: do not exit after unknown option.
+Subject: [PATCH] Build: do not exit after unknown option.
 
 ---
  auto/options | 1 -
  1 file changed, 1 deletion(-)
 
 diff --git a/auto/options b/auto/options
-index 521c976..26cc55a 100644
+index 80be906..c34a033 100644
 --- a/auto/options
 +++ b/auto/options
-@@ -397,7 +397,6 @@ $0: warning: the \"--with-sha1-asm\" option is deprecated"
+@@ -401,7 +401,6 @@ $0: warning: the \"--with-sha1-asm\" option is deprecated"
  
          *)
              echo "$0: error: invalid option \"$option\""
@@ -19,6 +19,3 @@ index 521c976..26cc55a 100644
          ;;
      esac
  done
--- 
-2.25.0
-

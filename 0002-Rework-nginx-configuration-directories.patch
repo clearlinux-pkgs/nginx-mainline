@@ -1,7 +1,7 @@
-From 893c933cb440b1a57b82f3b86713cefe5a2a640a Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Wed, 29 Mar 2017 22:40:11 +0000
-Subject: [PATCH 2/5] Rework nginx configuration directories
+Subject: [PATCH] Rework nginx configuration directories
 
 Instead of having configuration values that can't be changed in the
 stateless configuraiton file, have the stateless configuration file only
@@ -242,6 +242,3 @@ index 0000000..bece759
 +        deny  all;
 +    }
 +}
--- 
-2.25.0
-

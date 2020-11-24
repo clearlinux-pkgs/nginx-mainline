@@ -1,7 +1,7 @@
-From 7c3338882dd87576ae8f01ea647973d456efc7ad Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Auke Kok <auke-jan.h.kok@intel.com>
 Date: Wed, 25 Sep 2019 11:51:19 -0700
-Subject: [PATCH 4/5] Add nginx-module build/install script.
+Subject: [PATCH] Add nginx-module build/install script.
 
 ---
  nginx-module | 31 +++++++++++++++++++++++++++++++
@@ -45,6 +45,3 @@ index 0000000..bd7fc1e
 +	$2/usr/bin/nginx-mainline -V 2>&1 | grep configure | cut -d: -f2- | \
 +		sed 's/--with-stream=dynamic//' > $2/usr/include/nginx-mainline/configure
 +fi
--- 
-2.25.0
-
