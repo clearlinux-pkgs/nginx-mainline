@@ -12,7 +12,7 @@ This is only done for SSL, not for non-SSL listening servers.
  2 files changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/vim/syntax/nginx.vim b/contrib/vim/syntax/nginx.vim
-index 8304708..84ccab4 100644
+index 2d5ed06..e6ff067 100644
 --- a/contrib/vim/syntax/nginx.vim
 +++ b/contrib/vim/syntax/nginx.vim
 @@ -62,7 +62,7 @@ syn match ngxListenComment '#.*$'
@@ -25,7 +25,7 @@ index 8304708..84ccab4 100644
      \ ipv6only reuseport so_keepalive
      \ nextgroup=@ngxListenParams skipwhite skipempty
 diff --git a/src/http/ngx_http_core_module.c b/src/http/ngx_http_core_module.c
-index 3671558..681aec3 100644
+index 67476e7..2778598 100644
 --- a/src/http/ngx_http_core_module.c
 +++ b/src/http/ngx_http_core_module.c
 @@ -4057,6 +4057,9 @@ ngx_http_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
@@ -55,6 +55,6 @@ index 3671558..681aec3 100644
 +            continue;
 +        }
 +
-         if (ngx_strcmp(value[n].data, "spdy") == 0) {
-             ngx_conf_log_error(NGX_LOG_WARN, cf, 0,
-                                "invalid parameter \"spdy\": "
+         if (ngx_strncmp(value[n].data, "so_keepalive=", 13) == 0) {
+ 
+             if (ngx_strcmp(&value[n].data[13], "on") == 0) {

@@ -18,10 +18,10 @@ available.
  6 files changed, 6 insertions(+), 12 deletions(-)
 
 diff --git a/src/http/modules/ngx_http_proxy_module.c b/src/http/modules/ngx_http_proxy_module.c
-index 3d8768a..9a1ab59 100644
+index 77a1e0d..48e0137 100644
 --- a/src/http/modules/ngx_http_proxy_module.c
 +++ b/src/http/modules/ngx_http_proxy_module.c
-@@ -3677,8 +3677,7 @@ ngx_http_proxy_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child)
+@@ -3684,8 +3684,7 @@ ngx_http_proxy_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child)
                                prev->upstream.ssl_session_reuse, 1);
  
      ngx_conf_merge_bitmask_value(conf->ssl_protocols, prev->ssl_protocols,
