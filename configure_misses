@@ -14,5 +14,6 @@ Configure miss: IP_RECVDSTADDR
 Configure miss: IP_SENDSRCADDR 
 Configure miss: kqueue AIO support 
 Configure miss: setproctitle() 
+Configure miss: strerrordesc_np() 
 Configure miss: POSIX semaphores 
 Configure miss: struct dirent.d_namlen 
