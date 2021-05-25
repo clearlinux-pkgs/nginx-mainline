@@ -14,6 +14,5 @@ Configure miss: dlopen()
 Configure miss: kqueue 
 Configure miss: kqueue AIO support 
 Configure miss: setproctitle() 
-Configure miss: strerrordesc_np() 
 Configure miss: struct dirent.d_namlen 
 Configure miss: sys/filio.h 
