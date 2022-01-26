@@ -18,10 +18,10 @@ available.
  6 files changed, 6 insertions(+), 12 deletions(-)
 
 diff --git a/src/http/modules/ngx_http_proxy_module.c b/src/http/modules/ngx_http_proxy_module.c
-index 77a1e0d..48e0137 100644
+index 7c4061c..8d7f536 100644
 --- a/src/http/modules/ngx_http_proxy_module.c
 +++ b/src/http/modules/ngx_http_proxy_module.c
-@@ -3684,8 +3684,7 @@ ngx_http_proxy_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child)
+@@ -3724,8 +3724,7 @@ ngx_http_proxy_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child)
                                prev->upstream.ssl_session_reuse, 1);
  
      ngx_conf_merge_bitmask_value(conf->ssl_protocols, prev->ssl_protocols,
@@ -32,10 +32,10 @@ index 77a1e0d..48e0137 100644
      ngx_conf_merge_str_value(conf->ssl_ciphers, prev->ssl_ciphers,
                               "DEFAULT");
 diff --git a/src/http/modules/ngx_http_ssl_module.c b/src/http/modules/ngx_http_ssl_module.c
-index e062b03..f03187f 100644
+index d74d460..23cf948 100644
 --- a/src/http/modules/ngx_http_ssl_module.c
 +++ b/src/http/modules/ngx_http_ssl_module.c
-@@ -671,8 +671,7 @@ ngx_http_ssl_merge_srv_conf(ngx_conf_t *cf, void *parent, void *child)
+@@ -632,8 +632,7 @@ ngx_http_ssl_merge_srv_conf(ngx_conf_t *cf, void *parent, void *child)
      ngx_conf_merge_value(conf->reject_handshake, prev->reject_handshake, 0);
  
      ngx_conf_merge_bitmask_value(conf->protocols, prev->protocols,
@@ -46,10 +46,10 @@ index e062b03..f03187f 100644
      ngx_conf_merge_size_value(conf->buffer_size, prev->buffer_size,
                           NGX_SSL_BUFSIZE);
 diff --git a/src/http/modules/ngx_http_uwsgi_module.c b/src/http/modules/ngx_http_uwsgi_module.c
-index bf27326..007a706 100644
+index d46741a..34d0b35 100644
 --- a/src/http/modules/ngx_http_uwsgi_module.c
 +++ b/src/http/modules/ngx_http_uwsgi_module.c
-@@ -1818,8 +1818,7 @@ ngx_http_uwsgi_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child)
+@@ -1820,8 +1820,7 @@ ngx_http_uwsgi_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child)
                                prev->upstream.ssl_session_reuse, 1);
  
      ngx_conf_merge_bitmask_value(conf->ssl_protocols, prev->ssl_protocols,
@@ -60,10 +60,10 @@ index bf27326..007a706 100644
      ngx_conf_merge_str_value(conf->ssl_ciphers, prev->ssl_ciphers,
                               "DEFAULT");
 diff --git a/src/mail/ngx_mail_ssl_module.c b/src/mail/ngx_mail_ssl_module.c
-index d560bd6..d21d483 100644
+index 2a1043e..22e058c 100644
 --- a/src/mail/ngx_mail_ssl_module.c
 +++ b/src/mail/ngx_mail_ssl_module.c
-@@ -306,8 +306,7 @@ ngx_mail_ssl_merge_conf(ngx_conf_t *cf, void *parent, void *child)
+@@ -360,8 +360,7 @@ ngx_mail_ssl_merge_conf(ngx_conf_t *cf, void *parent, void *child)
                           prev->prefer_server_ciphers, 0);
  
      ngx_conf_merge_bitmask_value(conf->protocols, prev->protocols,
@@ -74,10 +74,10 @@ index d560bd6..d21d483 100644
      ngx_conf_merge_uint_value(conf->verify, prev->verify, 0);
      ngx_conf_merge_uint_value(conf->verify_depth, prev->verify_depth, 1);
 diff --git a/src/stream/ngx_stream_proxy_module.c b/src/stream/ngx_stream_proxy_module.c
-index 0c86083..1a3c7f4 100644
+index 934e7d8..0773907 100644
 --- a/src/stream/ngx_stream_proxy_module.c
 +++ b/src/stream/ngx_stream_proxy_module.c
-@@ -2068,8 +2068,7 @@ ngx_stream_proxy_merge_srv_conf(ngx_conf_t *cf, void *parent, void *child)
+@@ -2154,8 +2154,7 @@ ngx_stream_proxy_merge_srv_conf(ngx_conf_t *cf, void *parent, void *child)
                                prev->ssl_session_reuse, 1);
  
      ngx_conf_merge_bitmask_value(conf->ssl_protocols, prev->ssl_protocols,
@@ -88,10 +88,10 @@ index 0c86083..1a3c7f4 100644
      ngx_conf_merge_str_value(conf->ssl_ciphers, prev->ssl_ciphers, "DEFAULT");
  
 diff --git a/src/stream/ngx_stream_ssl_module.c b/src/stream/ngx_stream_ssl_module.c
-index ccd359f..0507725 100644
+index c530832..71e0678 100644
 --- a/src/stream/ngx_stream_ssl_module.c
 +++ b/src/stream/ngx_stream_ssl_module.c
-@@ -641,8 +641,7 @@ ngx_stream_ssl_merge_conf(ngx_conf_t *cf, void *parent, void *child)
+@@ -703,8 +703,7 @@ ngx_stream_ssl_merge_conf(ngx_conf_t *cf, void *parent, void *child)
                           prev->prefer_server_ciphers, 0);
  
      ngx_conf_merge_bitmask_value(conf->protocols, prev->protocols,

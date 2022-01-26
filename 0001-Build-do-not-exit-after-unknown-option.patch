@@ -8,10 +8,10 @@ Subject: [PATCH] Build: do not exit after unknown option.
  1 file changed, 1 deletion(-)
 
 diff --git a/auto/options b/auto/options
-index 80be906..c34a033 100644
+index 48f3a1a..1b430d4 100644
 --- a/auto/options
 +++ b/auto/options
-@@ -401,7 +401,6 @@ $0: warning: the \"--with-sha1-asm\" option is deprecated"
+@@ -403,7 +403,6 @@ $0: warning: the \"--with-sha1-asm\" option is deprecated"
  
          *)
              echo "$0: error: invalid option \"$option\""

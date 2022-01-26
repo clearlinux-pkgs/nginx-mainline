@@ -12,10 +12,10 @@ This is only done for SSL, not for non-SSL listening servers.
  2 files changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/vim/syntax/nginx.vim b/contrib/vim/syntax/nginx.vim
-index 2d5ed06..e6ff067 100644
+index 6828cd3..b5e60fd 100644
 --- a/contrib/vim/syntax/nginx.vim
 +++ b/contrib/vim/syntax/nginx.vim
-@@ -62,7 +62,7 @@ syn match ngxListenComment '#.*$'
+@@ -65,7 +65,7 @@ syn match ngxListenComment '#.*$'
      \ contained
      \ nextgroup=@ngxListenParams skipwhite skipempty
  syn keyword ngxListenOptions contained
@@ -25,10 +25,10 @@ index 2d5ed06..e6ff067 100644
      \ ipv6only reuseport so_keepalive
      \ nextgroup=@ngxListenParams skipwhite skipempty
 diff --git a/src/http/ngx_http_core_module.c b/src/http/ngx_http_core_module.c
-index 67476e7..2778598 100644
+index c7463dc..cebd6a6 100644
 --- a/src/http/ngx_http_core_module.c
 +++ b/src/http/ngx_http_core_module.c
-@@ -4057,6 +4057,9 @@ ngx_http_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
+@@ -4074,6 +4074,9 @@ ngx_http_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
          if (ngx_strcmp(value[n].data, "ssl") == 0) {
  #if (NGX_HTTP_SSL)
              lsopt.ssl = 1;
@@ -38,7 +38,7 @@ index 67476e7..2778598 100644
              continue;
  #else
              ngx_conf_log_error(NGX_LOG_EMERG, cf, 0,
-@@ -4068,7 +4071,6 @@ ngx_http_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
+@@ -4085,7 +4088,6 @@ ngx_http_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
  
          if (ngx_strcmp(value[n].data, "http2") == 0) {
  #if (NGX_HTTP_V2)
@@ -46,7 +46,7 @@ index 67476e7..2778598 100644
              continue;
  #else
              ngx_conf_log_error(NGX_LOG_EMERG, cf, 0,
-@@ -4078,6 +4080,11 @@ ngx_http_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
+@@ -4095,6 +4097,11 @@ ngx_http_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
  #endif
          }
  
