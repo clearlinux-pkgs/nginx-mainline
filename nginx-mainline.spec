@@ -6,7 +6,7 @@
 #
 Name     : nginx-mainline
 Version  : 1.21.6
-Release  : 122
+Release  : 123
 URL      : https://nginx.org/download/nginx-1.21.6.tar.gz
 Source0  : https://nginx.org/download/nginx-1.21.6.tar.gz
 Source1  : nginx-mainline-setup.service
@@ -24,7 +24,7 @@ Requires: nginx-mainline-license = %{version}-%{release}
 Requires: nginx-mainline-services = %{version}-%{release}
 BuildRequires : buildreq-cpan
 BuildRequires : openssl-dev
-BuildRequires : pcre2-dev
+BuildRequires : pcre-dev
 BuildRequires : zlib-dev
 Patch1: 0001-Build-do-not-exit-after-unknown-option.patch
 Patch2: 0002-Rework-nginx-configuration-directories.patch
@@ -124,7 +124,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1643171948
+export SOURCE_DATE_EPOCH=1643404101
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -176,7 +176,7 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1643171948
+export SOURCE_DATE_EPOCH=1643404101
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nginx-mainline
 cp %{_builddir}/nginx-1.21.6/LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/ae6e4fc32b0a44181fdd221d07eadf66679f35fb
