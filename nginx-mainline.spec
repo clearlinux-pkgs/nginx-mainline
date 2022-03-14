@@ -6,7 +6,7 @@
 #
 Name     : nginx-mainline
 Version  : 1.21.6
-Release  : 123
+Release  : 124
 URL      : https://nginx.org/download/nginx-1.21.6.tar.gz
 Source0  : https://nginx.org/download/nginx-1.21.6.tar.gz
 Source1  : nginx-mainline-setup.service
