@@ -1,0 +1,11 @@
+lua-nginx-module
+memc-nginx-module
+modsecurity-nginx
+nginx_cookie_flag_module
+nginx-rtmp-module
+nginx-upload-module
+ngx_brotli
+ngx-fancyindex
+ngx_http_auth_pam_module
+ngx_http_enhanced_memcached_module
+redis2-nginx-module
