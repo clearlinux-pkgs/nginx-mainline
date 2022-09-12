@@ -6,7 +6,7 @@
 #
 Name     : nginx-mainline
 Version  : 1.23.1
-Release  : 126
+Release  : 127
 URL      : https://nginx.org/download/nginx-1.23.1.tar.gz
 Source0  : https://nginx.org/download/nginx-1.23.1.tar.gz
 Source1  : nginx-mainline-setup.service
