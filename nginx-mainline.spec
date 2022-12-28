@@ -5,14 +5,14 @@
 # Source0 file verified with key 0xA0EA981B66B0D967 (k.pavlov@f5.com)
 #
 Name     : nginx-mainline
-Version  : 1.23.1
-Release  : 127
-URL      : https://nginx.org/download/nginx-1.23.1.tar.gz
-Source0  : https://nginx.org/download/nginx-1.23.1.tar.gz
+Version  : 1.23.3
+Release  : 128
+URL      : https://nginx.org/download/nginx-1.23.3.tar.gz
+Source0  : https://nginx.org/download/nginx-1.23.3.tar.gz
 Source1  : nginx-mainline-setup.service
 Source2  : nginx-mainline.service
 Source3  : nginx-mainline.tmpfiles
-Source4  : https://nginx.org/download/nginx-1.23.1.tar.gz.asc
+Source4  : https://nginx.org/download/nginx-1.23.3.tar.gz.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-2-Clause
@@ -111,8 +111,8 @@ services components for the nginx-mainline package.
 
 
 %prep
-%setup -q -n nginx-1.23.1
-cd %{_builddir}/nginx-1.23.1
+%setup -q -n nginx-1.23.3
+cd %{_builddir}/nginx-1.23.3
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -124,7 +124,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1658249960
+export SOURCE_DATE_EPOCH=1672188371
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -176,10 +176,10 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1658249960
+export SOURCE_DATE_EPOCH=1672188371
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nginx-mainline
-cp %{_builddir}/nginx-1.23.1/LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/de0ea043351e203ff16503c81a431405422ff3a1
+cp %{_builddir}/nginx-%{version}/LICENSE %{buildroot}/usr/share/package-licenses/nginx-mainline/de0ea043351e203ff16503c81a431405422ff3a1
 %make_install
 mkdir -p %{buildroot}/usr/lib/systemd/system
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/systemd/system/nginx-mainline-setup.service
