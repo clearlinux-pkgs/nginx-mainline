@@ -1,4 +1,15 @@
 
+Changes with nginx 1.28.0                                        23 Apr 2025
+
+    *) 1.28.x stable branch.
+
+    *) Bugfix: nginx could not be built by gcc 15 if ngx_http_v2_module or
+       ngx_http_v3_module modules were used.
+
+    *) Bugfix: nginx might not be built by gcc 14 or newer with -O3 -flto
+       optimization if ngx_http_v3_module was used.
+
+
 Changes with nginx 1.27.5                                        16 Apr 2025
 
     *) Feature: CUBIC congestion control in QUIC connections.
